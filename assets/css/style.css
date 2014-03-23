@@ -1,0 +1,9 @@
+body {
+    margin: 0;
+}
+
+#gameContainer {
+	width: 700px;
+	margin: auto;
+	margin-top: 50px;
+}

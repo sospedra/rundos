@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>Run Dos Project</title>
+
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css" media="screen" charset="utf-8">
+
+    <script src="js/vendor/phaser.min.js"></script>
+
+    <script src="js/boot.js"></script>
+    <script src="js/preloader.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/playRoom.js"></script>
+</head>
+
+<body>
+
+    <div id="gameContainer">
+    </div>
+    <script type="text/javascript">
+        (function boot() {
+            var game = new Phaser.Game(960, 540, Phaser.CANVAS, 'gameContainer');
+
+            game.state.add('boot', Main.Boot, true);
+            game.state.add('preloader', Main.Preloader);
+            //game.state.add('menu', Main.Menu);
+            game.state.add('playRoom', Main.PlayRoom);
+        })();
+    </script>
+</body>
+
+</html>
