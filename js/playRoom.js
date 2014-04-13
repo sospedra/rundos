@@ -3,106 +3,91 @@ Main.PlayRoom = function (game) {
 };
 
 Main.PlayRoom.prototype = {
-    create: function() {    	
-    	// Score
-    	this.game.score = 0;
-    	this.scoreBoard = this.game.add.text(20, 20, 'Score: ' + this.game.score, { fill: '#ffffff' });
-    	
-    	// Load physics
-    	this.game.physics.p2.setImpactEvents(true);
-
-	    //  Create our collision groups. One for the player, one for the pandas
-	    this.playerCollisionGroup = this.game.physics.p2.createCollisionGroup();
-	    this.wallsCollisionGroup = this.game.physics.p2.createCollisionGroup();
-
+    create: function() {
+        // The score
+        this.score = 0;
+        var style = { font: "30px Arial", fill: "#ffffff" };
+        this.label_score = this.game.add.text(20,20, "0", style);
+        // Load the dos
+        this.dos = this.game.add.sprite(350, 400, 'dos');
+        this.dos.anchor.setTo(0.5, 0.5);
+        this.dos.body.setPolygon(32, -14);
         // Load the core
         this.core = this.game.add.sprite(350, 250, 'core');
         this.core.anchor.setTo(0.5, 0.5);
         this.core.scale.setTo(0.5, 0.5);
-
-   		// Dos setup
-   		this.dos = this.game.add.sprite(350, 400, 'dos');
-   		this.dos.smoothed = false;
-   		this.dos.anchor.setTo(0.5, 0.5);
-   		// this animation and this play
-   		this.game.physics.p2.enable(this.dos, false);
-   		this.dos.body.setCollisionGroup(this.playerCollisionGroup);
-
         // Load walls
         this.walls = this.game.add.group();
-   		this.walls.enableBody = true;
-   		this.walls.physicsBodyType = Phaser.Physics.P2JS; 		
-
+        this.walls.createMultiple(80, 'wall');
         // Wall loop
-        this.timer = this.game.time.events.loop(1000, function(){
-        	this.addWall();
-        	this.game.score++;
-        }, this);
-
-        // Add controls
+        this.timer = this.game.time.events.loop(1000, this.add_row_of_walls, this);
+        // Add control
         this.cursors = this.game.input.keyboard.createCursorKeys();
-
-        // Set up collisions
-        this.dos.body.collides(this.wallsCollisionGroup, this.collisionHandler, this);
     },
+
     update: function() {
-        // Scoreboard
-    	this.scoreBoard.setText('Score: ' + this.game.score);
+        this.game.physics.overlap(this.dos, this.walls, this.restart_game, null, this);
 
-        // Scalability
-		this.walls.forEachAlive(function(wall){
-    		wall.scale.setTo(wall.customScaleX, wall.customScaleY);
-            //wall.body.setRectangle(40, 40);
-    		wall.customScaleX += 0.1;
-    		wall.customScaleY += 0.002;
-    	});
+        this.walls.forEachAlive(function(wall){
+            wall.scale.setTo(wall.customScaleX, wall.customScaleY);
+            wall.customScaleX += 0.0055;
+            wall.customScaleY += 0.001;
+        });
 
-        // Key movement
-        this.dos.body.setZeroVelocity();
+        this.dos.body.velocity.setTo(0, 0);
         if (this.cursors.left.isDown)
-            this.dos.body.moveLeft(600);
+            this.dos.body.velocity.x = -600;
         else if (this.cursors.right.isDown)
-            this.dos.body.moveRight(600);
+            this.dos.body.velocity.x = 600;
 
         // Restart game if Dos goes out the canvas
-        if (this.dos.inWorld === false)            
-            this.restartGame();
-    },
-
-    collisionHandler: function(dos, wall) {
-        this.restartGame();
+        if (this.dos.inWorld === false)
+            this.restart_game();
     },
 
     restartGame: function(){
-		console.log("YOU DIE BITCH!");
+        console.log("YOU DIE BITCH!");
         this.game.time.events.remove(this.timer);
-        this.game.state.start('playRoom');
+        this.game.state.start('main');
     },
 
-    addWall: function() {
-        var hole = Math.floor(Math.random()*6);
-        var wall = this.walls.create(350, 285, hole);
+    add_one_wall: function(x, y, isLeft, mid, i) {
+        // Get the first dead wall of group
+        var wall = this.walls.getFirstDead();
 
-        // Scalability
-        wall.customScaleX = 1;
-        wall.customScaleY = 1;    	
-
-        // Set up
+        wall.customScaleX = 0.03;
+        wall.customScaleY = 0.1;
+        wall.isLeft = isLeft;
+        wall.mid = mid;
+        wall.scale.setTo(wall.customScaleX, wall.customScaleY);
         wall.anchor.setTo(0.5, 0.5);
+        // Set the new position of the pipe
+        wall.reset(x, y);
+        // Make it move
+        wall.body.velocity.x = ((i*15) - 125);
+
+
+        wall.body.velocity.y = 100;
+        // Kill the pipe when it's no longer aviable
         wall.outOfBoundsKill = true;
-
-        // Collides
-    	wall.body.setCollisionGroup(this.wallsCollisionGroup);
-        wall.body.collides([this.playerCollisionGroup]);
-
-        // Movement    	
-    	wall.body.moveDown(100);
-    	if(wall.inWorld === false)
-            wall.kill();
     },
 
-    render: function() {
-    	//this.game.debug.spriteInfo(this.wallsCollisionGroup, 32, 32);
-    	//this.game.debug.text(this.walls.length, 500, 32);
+    add_row_of_walls: function() {
+        // Increments score
+        this.score += 1;
+        this.label_score.content = this.score;
+
+        // Determinates the hole between walls
+        var hole = Math.floor(Math.random()*16);
+        console.log(hole);
+        var mid = true;
+        (hole<8) ? mid = true : mid = false;
+        var isLeft = true;
+
+        for (var i = 0; i < 18; i++)
+            if(i != hole && i != hole + 1){
+                (i<hole) ? isLeft = true : isLeft = false;
+                this.add_one_wall(i*3+325, 285, isLeft, mid, i);
+            }
     }
 };
