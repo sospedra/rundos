@@ -24,13 +24,13 @@ Main.PlayRoom.prototype = {
 
         // Load walls
         this.wallsBottom = this.game.add.group();
-        this.wallsBottom.createMultiple(80, 'wall');
+        this.wallsBottom.createMultiple(80, 'wallBottom');
         this.wallsUpper = this.game.add.group();
-        this.wallsUpper.createMultiple(80, 'wall');
+        this.wallsUpper.createMultiple(80, 'wallUpper');
         this.wallsLeft = this.game.add.group();
-        this.wallsLeft.createMultiple(80, 'wall');
+        this.wallsLeft.createMultiple(80, 'wallLeft');
         this.wallsRight = this.game.add.group();
-        this.wallsRight.createMultiple(80, 'wall');
+        this.wallsRight.createMultiple(80, 'wallRight');
 
         // Wall loop
         this.timer = this.game.time.events.loop(1000, this.setupWalls, this);
@@ -69,7 +69,8 @@ Main.PlayRoom.prototype = {
 
     restartGame: function(){
         console.log("Your mark is " + this.score);
-        
+        this.game.time.events.remove(this.timer);
+        this.game.state.start('playRoom');        
     },
 
     add_one_wall: function(x, y, i, wallsGroup, direction, horizontal) {
