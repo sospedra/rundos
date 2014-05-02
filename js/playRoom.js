@@ -4,90 +4,154 @@ Main.PlayRoom = function (game) {
 
 Main.PlayRoom.prototype = {
     create: function() {
+        // The dimensions
+        this.game.world.setBounds(-325, -325, 650, 650);
+
         // The score
         this.score = 0;
         var style = { font: "30px Arial", fill: "#ffffff" };
-        this.label_score = this.game.add.text(20,20, "0", style);
+        this.label_score = this.game.add.text(-340, -290, "0", style);
+
         // Load the dos
-        this.dos = this.game.add.sprite(350, 400, 'dos');
+        this.dos = this.game.add.sprite(0, 200, 'dos');
         this.dos.anchor.setTo(0.5, 0.5);
-        this.dos.body.setPolygon(32, -14);
+        this.dos.checkWorldBounds = true;
+
         // Load the core
-        this.core = this.game.add.sprite(350, 250, 'core');
+        this.core = this.game.add.sprite(0, 0, 'core');
         this.core.anchor.setTo(0.5, 0.5);
         this.core.scale.setTo(0.5, 0.5);
+
         // Load walls
-        this.walls = this.game.add.group();
-        this.walls.createMultiple(80, 'wall');
+        this.wallsBottom = this.game.add.group();
+        this.wallsBottom.createMultiple(80, 'wall');
+        this.wallsUpper = this.game.add.group();
+        this.wallsUpper.createMultiple(80, 'wall');
+        this.wallsLeft = this.game.add.group();
+        this.wallsLeft.createMultiple(80, 'wall');
+        this.wallsRight = this.game.add.group();
+        this.wallsRight.createMultiple(80, 'wall');
+
         // Wall loop
-        this.timer = this.game.time.events.loop(1000, this.add_row_of_walls, this);
+        this.timer = this.game.time.events.loop(1000, this.setupWalls, this);
+
         // Add control
         this.cursors = this.game.input.keyboard.createCursorKeys();
     },
 
     update: function() {
-        this.game.physics.overlap(this.dos, this.walls, this.restart_game, null, this);
+        this.game.physics.collide(this.dos, this.wallsBottom, this.restartGame, null, this);
 
-        this.walls.forEachAlive(function(wall){
-            wall.scale.setTo(wall.customScaleX, wall.customScaleY);
-            wall.customScaleX += 0.0055;
-            wall.customScaleY += 0.001;
-        });
+        this.enlarger(this.wallsBottom, 300, false);
+        this.enlarger(this.wallsUpper, -300, false);
+        this.enlarger(this.wallsRight, 300, true);
+        this.enlarger(this.wallsLeft, -300, true);
 
+        // Movement
+        // Reset the movement
         this.dos.body.velocity.setTo(0, 0);
-        if (this.cursors.left.isDown)
-            this.dos.body.velocity.x = -600;
-        else if (this.cursors.right.isDown)
-            this.dos.body.velocity.x = 600;
+        this.dos.body.angularAcceleration = 0;
+        this.dos.body.acceleration.x = 0;
+        // Set it up by cursors pressing
+        if (this.cursors.left.isDown){
+            this.dos.body.angularAcceleration -= 200;
+            this.dos.body.acceleration.x -= 50000;
+        } else if (this.cursors.right.isDown){            
+            this.dos.body.angularAcceleration += 200;
+            this.dos.body.acceleration.x += 50000;
+        } else if(this.cursors.up.isDown)
+            this.game.world.rotation += 0.01;
 
         // Restart game if Dos goes out the canvas
-        if (this.dos.inWorld === false)
-            this.restart_game();
+        if (this.dos.position.x < -500 || this.dos.position.x > 500)
+           this.restartGame();
     },
 
     restartGame: function(){
-        console.log("YOU DIE BITCH!");
+        console.log("Your mark is " + this.score);
         this.game.time.events.remove(this.timer);
-        this.game.state.start('main');
+        this.game.state.start('playRoom');
     },
 
-    add_one_wall: function(x, y, isLeft, mid, i) {
+    add_one_wall: function(x, y, i, wallsGroup, direction, horizontal) {
         // Get the first dead wall of group
-        var wall = this.walls.getFirstDead();
+        var wall = wallsGroup.getFirstDead();
 
+        // Set up the wall
         wall.customScaleX = 0.03;
         wall.customScaleY = 0.1;
-        wall.isLeft = isLeft;
-        wall.mid = mid;
         wall.scale.setTo(wall.customScaleX, wall.customScaleY);
         wall.anchor.setTo(0.5, 0.5);
-        // Set the new position of the pipe
         wall.reset(x, y);
+
+        wall.body.checkCollision.right = false;
+        wall.body.checkCollision.left = false;
+        
         // Make it move
-        wall.body.velocity.x = ((i*15) - 125);
+        if(horizontal){
+            wall.body.velocity.x = 100 * direction;
+            wall.body.velocity.y = ((i*15) - 125);
+        }else{
+            wall.body.velocity.x = ((i*15) - 125);
+            wall.body.velocity.y = 100 * direction;    
+        }
+        
 
-
-        wall.body.velocity.y = 100;
         // Kill the pipe when it's no longer aviable
         wall.outOfBoundsKill = true;
     },
 
-    add_row_of_walls: function() {
+    add_row_of_walls: function(wallsGroup, x, y, direction, horizontal) {
+        // Determinates the hole between walls
+        var hole = Math.floor(Math.random()*16);
+
+        for (var i = 0; i < 18; i++)
+            if(i != hole && i != hole + 1)
+                if(horizontal)
+                    this.add_one_wall(x, i*3 - y, i, wallsGroup, direction, horizontal);
+                else
+                    this.add_one_wall(i*3 - x, y, i, wallsGroup, direction, horizontal);
+            
+    },
+
+    setupWalls: function(){
         // Increments score
         this.score += 1;
         this.label_score.content = this.score;
+        this.add_row_of_walls(this.wallsBottom, 20, 20, 1, false);
+        this.add_row_of_walls(this.wallsUpper, 20, -20, -1, false);
+        this.add_row_of_walls(this.wallsRight, 20, 20, 1, true);
+        this.add_row_of_walls(this.wallsLeft, 20, 20, -1, true);
 
-        // Determinates the hole between walls
-        var hole = Math.floor(Math.random()*16);
-        console.log(hole);
-        var mid = true;
-        (hole<8) ? mid = true : mid = false;
-        var isLeft = true;
+    },
 
-        for (var i = 0; i < 18; i++)
-            if(i != hole && i != hole + 1){
-                (i<hole) ? isLeft = true : isLeft = false;
-                this.add_one_wall(i*3+325, 285, isLeft, mid, i);
+    enlarger: function(wallsGroup, limit, horizontal){
+        if(wallsGroup === undefined)
+            return false;
+
+        var limitByAxis;
+
+        wallsGroup.forEachAlive(function(wall){            
+            wall.scale.setTo(wall.customScaleX, wall.customScaleY);
+            if(horizontal){
+                wall.customScaleX += 0.002;
+                wall.customScaleY += 0.004;
+                limitByAxis = wall.position.x;
+            }else{
+                wall.customScaleX += 0.0055;
+                wall.customScaleY += 0.001;
+                limitByAxis = wall.position.y;
+            }            
+
+            if(limit < 0){
+                if(limitByAxis < limit)
+                    wall.kill();
             }
+            else{
+                if(limitByAxis > limit)
+                    wall.kill();
+            }
+            
+        });
     }
 };
