@@ -13,7 +13,7 @@ Main.PlayRoom.prototype = {
         this.label_score = this.game.add.text(-340, -290, "0", style);
 
         // Load the dos
-        this.dos = this.game.add.sprite(0, 200, 'dos');
+        this.dos = this.game.add.sprite(0, 170, 'dos');
         this.dos.anchor.setTo(0.5, 0.5);
         this.dos.checkWorldBounds = true;
 
@@ -92,7 +92,7 @@ Main.PlayRoom.prototype = {
             wall.body.velocity.x = 100 * direction;
             wall.body.velocity.y = ((i*12) - 100);
         }else{
-            wall.body.velocity.x = ((i*11) - 90);
+            wall.body.velocity.x = ((i*10) - 80);
             wall.body.velocity.y = 100 * direction;    
         }
         
@@ -106,7 +106,7 @@ Main.PlayRoom.prototype = {
         var hole = Math.floor(Math.random()*16);
 
         for (var i = 0; i < 18; i++)
-            if(i != hole && i != hole + 1)
+            if(i != hole || i != hole + 1 && i != hole + 1)
                 if(horizontal)
                     this.add_one_wall(x, i*3 - y, i, wallsGroup, direction, horizontal);
                 else
