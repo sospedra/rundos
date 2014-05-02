@@ -3,9 +3,9 @@ Main.PlayRoom = function (game) {
 };
 
 Main.PlayRoom.prototype = {
-    create: function() {
+    create: function() {        
         // The dimensions
-        this.game.world.setBounds(-325, -325, 650, 650);
+        this.game.world.setBounds(-300, -300, 600, 600);
 
         // The score
         this.score = 0;
@@ -69,8 +69,7 @@ Main.PlayRoom.prototype = {
 
     restartGame: function(){
         console.log("Your mark is " + this.score);
-        this.game.time.events.remove(this.timer);
-        this.game.state.start('playRoom');
+        
     },
 
     add_one_wall: function(x, y, i, wallsGroup, direction, horizontal) {
@@ -90,9 +89,9 @@ Main.PlayRoom.prototype = {
         // Make it move
         if(horizontal){
             wall.body.velocity.x = 100 * direction;
-            wall.body.velocity.y = ((i*15) - 125);
+            wall.body.velocity.y = ((i*12) - 100);
         }else{
-            wall.body.velocity.x = ((i*15) - 125);
+            wall.body.velocity.x = ((i*11) - 90);
             wall.body.velocity.y = 100 * direction;    
         }
         
@@ -118,10 +117,10 @@ Main.PlayRoom.prototype = {
         // Increments score
         this.score += 1;
         this.label_score.content = this.score;
-        this.add_row_of_walls(this.wallsBottom, 20, 20, 1, false);
-        this.add_row_of_walls(this.wallsUpper, 20, -20, -1, false);
-        this.add_row_of_walls(this.wallsRight, 20, 20, 1, true);
-        this.add_row_of_walls(this.wallsLeft, 20, 20, -1, true);
+        this.add_row_of_walls(this.wallsBottom, 25, 30, 1, false);
+        this.add_row_of_walls(this.wallsUpper, 25, -30, -1, false);
+        this.add_row_of_walls(this.wallsRight, 50, 30, 1, true);
+        this.add_row_of_walls(this.wallsLeft, -50, 30, -1, true);
 
     },
 
@@ -134,8 +133,8 @@ Main.PlayRoom.prototype = {
         wallsGroup.forEachAlive(function(wall){            
             wall.scale.setTo(wall.customScaleX, wall.customScaleY);
             if(horizontal){
-                wall.customScaleX += 0.002;
-                wall.customScaleY += 0.004;
+                wall.customScaleX += 0.0027;
+                wall.customScaleY += 0.003;
                 limitByAxis = wall.position.x;
             }else{
                 wall.customScaleX += 0.0055;
