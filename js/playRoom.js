@@ -59,8 +59,9 @@ Main.PlayRoom.prototype = {
         } else if (this.cursors.right.isDown){            
             this.dos.body.angularAcceleration += 200;
             this.dos.body.acceleration.x += 50000;
-        } else if(this.cursors.up.isDown)
-            this.game.world.rotation += 0.01;
+        }
+
+        this.game.world.rotation += 0.01;
 
         // Restart game if Dos goes out the canvas
         if (this.dos.position.x < -500 || this.dos.position.x > 500)
@@ -106,7 +107,7 @@ Main.PlayRoom.prototype = {
         var hole = Math.floor(Math.random()*16);
 
         for (var i = 0; i < 18; i++)
-            if(i != hole || i != hole + 1 && i != hole + 1)
+            if(i != hole && i != hole + 1 && i != hole + 2)
                 if(horizontal)
                     this.add_one_wall(x, i*3 - y, i, wallsGroup, direction, horizontal);
                 else
