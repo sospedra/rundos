@@ -7,10 +7,12 @@ Main.PlayRoom.prototype = {
         // The dimensions
         this.game.world.setBounds(-300, -300, 600, 600);
 
-        // The score
+        // The misc
         this.score = 0;
         var style = { font: "30px Arial", fill: "#ffffff" };
         this.label_score = this.game.add.text(-340, -290, "0", style);
+        this.eventFlag = 0;
+        this.e;
 
         // Load the dos
         this.dos = this.game.add.sprite(0, 170, 'dos');
@@ -40,6 +42,14 @@ Main.PlayRoom.prototype = {
     },
 
     update: function() {
+        // Events
+        if(this.eventFlag === 250)
+            this.e = this.changeEvent();
+        if (this.e === "rotate")
+            this.game.world.rotation += 0.01;
+
+        this.eventFlag += 1;
+
         this.game.physics.collide(this.dos, this.wallsBottom, this.restartGame, null, this);
         this.game.physics.collide(this.dos, this.wallsUpper, this.restartGame, null, this);
         this.game.physics.collide(this.dos, this.wallsLeft, this.restartGame, null, this);
@@ -64,11 +74,22 @@ Main.PlayRoom.prototype = {
             this.dos.body.acceleration.x += 50000;
         }
 
-        this.game.world.rotation += 0.01;
+        // Rotate the world
+        
 
         // Restart game if Dos goes out the canvas
         if (this.dos.position.x < -500 || this.dos.position.x > 500)
            this.restartGame();
+    },
+
+    changeEvent: function(){
+        this.eventFlag = 0;
+        switch(Math.floor(Math.random()*2)){
+            case 0:
+                return "stopped";                
+            case 1:
+                return "rotate";
+        }
     },
 
     restartGame: function(){
@@ -107,14 +128,16 @@ Main.PlayRoom.prototype = {
 
     add_row_of_walls: function(wallsGroup, x, y, direction, horizontal) {
         // Determinates the hole between walls
-        var hole = Math.floor(Math.random()*16);
+        var hole1 = Math.floor(Math.random()*16);
+        var hole2 = Math.floor(Math.random()*16);
 
         for (var i = 0; i < 18; i++)
-            if(i != hole && i != hole + 1 && i != hole + 2)
-                if(horizontal)
-                    this.add_one_wall(x, i*3 - y, i, wallsGroup, direction, horizontal);
-                else
-                    this.add_one_wall(i*3 - x, y, i, wallsGroup, direction, horizontal);
+            if(i != hole1 && i != hole1 + 1 && i != hole1 + 2)
+                if(i != hole2 && i != hole2 + 1 && i != hole2 + 2)
+                    if(horizontal)
+                        this.add_one_wall(x, i*3 - y, i, wallsGroup, direction, horizontal);
+                    else
+                        this.add_one_wall(i*3 - x, y, i, wallsGroup, direction, horizontal);
             
     },
 
