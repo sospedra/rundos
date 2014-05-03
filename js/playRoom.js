@@ -13,6 +13,10 @@ Main.PlayRoom.prototype = {
         this.label_score = this.game.add.text(-340, -290, "0", style);
         this.eventFlag = 0;
         this.e;
+        if(!this.music){
+            this.music = this.game.add.audio('kabanjak',1,true);
+            this.music.play('',0,1,true);
+        }
 
         // Load the dos
         this.dos = this.game.add.sprite(0, 170, 'dos');
@@ -45,8 +49,10 @@ Main.PlayRoom.prototype = {
         // Events
         if(this.eventFlag === 250)
             this.e = this.changeEvent();
-        if (this.e === "rotate")
+        if (this.e === "clockwise")
             this.game.world.rotation += 0.01;
+        else if(this.e === "anticlockwise")
+            this.game.world.rotation -= 0.01;
 
         this.eventFlag += 1;
 
@@ -84,11 +90,13 @@ Main.PlayRoom.prototype = {
 
     changeEvent: function(){
         this.eventFlag = 0;
-        switch(Math.floor(Math.random()*2)){
+        switch(Math.floor(Math.random()*3)){
             case 0:
-                return "stopped";                
+                return "stopped";        
             case 1:
-                return "rotate";
+                return "clockwise";
+            case 2:
+                return "anticlockwise"
         }
     },
 
