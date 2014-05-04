@@ -4,7 +4,7 @@ Main.Preloader = function (game) {
 
 Main.Preloader.prototype = {
     preload: function () {    	
-    	this.game.stage.backgroundColor = '#0d0d0d';
+    	this.game.stage.backgroundColor = '#1a1a1a';
         this.cursors;
 
         this.game.load.image('core', 'assets/img/core.png');

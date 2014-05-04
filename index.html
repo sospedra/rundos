@@ -18,8 +18,15 @@
 
 <body>
 
-    <div id="gameContainer">
-    </div>
+    <section class="banner">
+        <h3>Run Dos Run!</h3>
+    </section>
+    <section class="menu">
+        <div class="ranking"></div>
+        <div class="score"></div>
+        <div class="credits"></div>
+    </section>
+    <section id="gameContainer"></section>
     <script type="text/javascript">
         (function boot() {
             var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'gameContainer');

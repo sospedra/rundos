@@ -56,11 +56,11 @@ Main.PlayRoom.prototype = {
 
         this.eventFlag += 1;
 
-        this.game.physics.collide(this.dos, this.wallsBottom, this.restartGame, null, this);
+       /* this.game.physics.collide(this.dos, this.wallsBottom, this.restartGame, null, this);
         this.game.physics.collide(this.dos, this.wallsUpper, this.restartGame, null, this);
         this.game.physics.collide(this.dos, this.wallsLeft, this.restartGame, null, this);
         this.game.physics.collide(this.dos, this.wallsRight, this.restartGame, null, this);
-
+*/
         this.enlarger(this.wallsBottom, 300, false);
         this.enlarger(this.wallsUpper, -300, false);
         this.enlarger(this.wallsRight, 300, true);
