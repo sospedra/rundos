@@ -11,8 +11,7 @@
     <script src="js/vendor/phaser.min.js"></script>
 
     <script src="js/boot.js"></script>
-    <script src="js/preloader.js"></script>
-    <script src="js/menu.js"></script>
+    <script src="js/preloader.js"></script>    
     <script src="js/playRoom.js"></script>
 </head>
 
@@ -22,9 +21,9 @@
         <h3>Run Dos Run!</h3>
     </section>
     <section class="menu">
-        <div class="ranking"></div>
-        <div class="score"></div>
-        <div class="credits"></div>
+        <div class="ranking">   Ranking</div>
+        <div id="score">0</div>
+        <div class="credits">Credits</div>
     </section>
     <section id="gameContainer"></section>
     <script type="text/javascript">
@@ -32,8 +31,7 @@
             var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'gameContainer');
 
             game.state.add('boot', Main.Boot, true);
-            game.state.add('preloader', Main.Preloader);
-            //game.state.add('menu', Main.Menu);
+            game.state.add('preloader', Main.Preloader);            
             game.state.add('playRoom', Main.PlayRoom);
         })();
     </script>

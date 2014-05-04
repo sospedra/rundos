@@ -1,10 +1,73 @@
+@font-face{
+	font-family: cubic;
+	src: url(fonts/cubic/cubic.ttf);
+}
+
+@font-face{
+	font-family: koobz;
+	src: url(fonts/koobz/koobz.ttf);
+}
+
 body {
     margin: 0;
     background-color: #0d0d0d;
+    color: #72b844;
+    font-family: cubic;
+}
+
+section.banner{
+	font-family: koobz;
+	font-size: 42px;
+	text-align: center;
+	margin-top: -20px;
+}
+
+section.menu{
+	padding-top: 15px;
+	background-color: #1a1a1a;
+	width: 600px;
+	margin: auto;	
+	height: 35px;
+}
+
+div.ranking{
+	margin-top: -15px;
+	padding-left: 10px; 
+	padding-top: 5px;
+	background-image: url(../img/menuleft.png);
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	float: left;
+	font-size: 22px;
+	height: 35px;
+	width: 225px;
+	cursor: pointer;
+}
+
+div#score{
+	float: left;
+	font-size: 22px;
+	height: 35px;
+	width: 130px;
+	text-align: center;	
+}
+
+div.credits{
+	margin-top: -15px;
+	padding-right: 10px; 
+	padding-top: 5px;
+	background-image: url(../img/menuright.png);
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	float: left;
+	font-size: 22px;
+	text-align: right;
+	height: 35px;
+	width: 225px;
+	cursor: pointer;
 }
 
 #gameContainer {
 	width: 600px;
 	margin: auto;
-	margin-top: 20px;
 }
