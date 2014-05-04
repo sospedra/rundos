@@ -9,10 +9,9 @@ Main.PlayRoom.prototype = {
 
         // The misc
         this.score = 0;
-        var style = { font: "30px Arial", fill: "#ffffff" };
-        this.label_score = this.game.add.text(-340, -290, "0", style);
         this.eventFlag = 0;
         this.e;
+        this.scorePlaceholder = document.getElementById('score');
         if(!this.music){
             this.music = this.game.add.audio('kabanjak',1,true);
             this.music.play('',0,1,true);
@@ -56,11 +55,11 @@ Main.PlayRoom.prototype = {
 
         this.eventFlag += 1;
 
-       /* this.game.physics.collide(this.dos, this.wallsBottom, this.restartGame, null, this);
+        this.game.physics.collide(this.dos, this.wallsBottom, this.restartGame, null, this);
         this.game.physics.collide(this.dos, this.wallsUpper, this.restartGame, null, this);
         this.game.physics.collide(this.dos, this.wallsLeft, this.restartGame, null, this);
         this.game.physics.collide(this.dos, this.wallsRight, this.restartGame, null, this);
-*/
+
         this.enlarger(this.wallsBottom, 300, false);
         this.enlarger(this.wallsUpper, -300, false);
         this.enlarger(this.wallsRight, 300, true);
@@ -80,11 +79,8 @@ Main.PlayRoom.prototype = {
             this.dos.body.acceleration.x += 50000;
         }
 
-        // Rotate the world
-        
-
         // Restart game if Dos goes out the canvas
-        if (this.dos.position.x < -500 || this.dos.position.x > 500)
+        if (this.dos.position.x < -300 || this.dos.position.x > 300)
            this.restartGame();
     },
 
@@ -128,7 +124,6 @@ Main.PlayRoom.prototype = {
             wall.body.velocity.x = ((i*10) - 80);
             wall.body.velocity.y = 100 * direction;    
         }
-        
 
         // Kill the pipe when it's no longer aviable
         wall.outOfBoundsKill = true;
@@ -151,8 +146,8 @@ Main.PlayRoom.prototype = {
 
     setupWalls: function(){
         // Increments score
-        this.score += 1;
-        this.label_score.content = this.score;
+        this.score += 16;
+        this.scorePlaceholder.innerHTML = this.score;
         this.add_row_of_walls(this.wallsBottom, 25, 30, 1, false);
         this.add_row_of_walls(this.wallsUpper, 25, -30, -1, false);
         this.add_row_of_walls(this.wallsRight, 50, 30, 1, true);

@@ -16,22 +16,29 @@ body {
 }
 
 section.banner{
-	font-family: koobz;
-	font-size: 42px;
 	text-align: center;
 	margin-top: -20px;
+	margin-bottom: 20px;
+}
+
+section.banner h3{
+	font-family: koobz;
+	font-size: 42px;
+	margin-bottom: 0;
+}
+section.banner span{	
+	font-family: sans-serif;
+	font-size: 12px;
 }
 
 section.menu{
-	padding-top: 15px;
 	background-color: #1a1a1a;
 	width: 600px;
 	margin: auto;	
-	height: 35px;
+	height: 45px;
 }
 
-div.ranking{
-	margin-top: -15px;
+div.ranking{	
 	padding-left: 10px; 
 	padding-top: 5px;
 	background-image: url(../img/menuleft.png);
@@ -44,16 +51,23 @@ div.ranking{
 	cursor: pointer;
 }
 
-div#score{
-	float: left;
-	font-size: 22px;
-	height: 35px;
+div.scorePlace{
+	padding-top: 10px;
+	position: relative;	
+	float: left;	
+	height:35px;
 	width: 130px;
 	text-align: center;	
 }
 
-div.credits{
-	margin-top: -15px;
+span#score{
+	position: absolute;
+	bottom: 0;
+	height: 30px;
+	font-size: 22px;
+}
+
+div.credits{	
 	padding-right: 10px; 
 	padding-top: 5px;
 	background-image: url(../img/menuright.png);
