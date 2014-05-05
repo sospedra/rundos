@@ -15,6 +15,7 @@ Main.PlayRoom.prototype = {
 		// DOM Selectors
 		this.flash = document.getElementById('flashContainer');
 		this.scorePlaceholder = document.getElementById('score');
+		this.controllersView = document.getElementById("controllersView");
 
 		// The music
 		if(!this.music){
@@ -182,6 +183,11 @@ Main.PlayRoom.prototype = {
 
 	setupWalls: function(){        
 		this.scorePlaceholder.innerHTML = this.score;
+		if(this.controllersView){
+			this.controllersView.parentNode.removeChild(this.controllersView);
+			this.controllersView = undefined;
+		}
+
 		this.add_row_of_walls(this.wallsBottom, 25, 30, 1, false);
 		this.add_row_of_walls(this.wallsUpper, 25, -30, -1, false);
 		this.add_row_of_walls(this.wallsRight, 50, 30, 1, true);

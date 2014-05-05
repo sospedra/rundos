@@ -55,5 +55,6 @@ span#score{
 /* GAME CONTAINER */
 section#gameContainer { z-index: 1; }
 section#flashContainer { z-index: 999; height: 600px; }
+section#controllersView { z-index: 300; height: 600px; background-image: url(../img/controllers.png); }
 .flash { background-color: #8d8d8d; opacity: 0.4; }
 .container{	width: 600px; position: absolute; left: 50%; margin-left: -300px; }
