@@ -1,87 +1,58 @@
-@font-face{
-	font-family: cubic;
-	src: url(fonts/cubic/cubic.ttf);
-}
+/*
+* CSS Run Dos Run!
+* Apr 2014
+*
+* Author: Rubén Sospedra
+*         sospedra.me
+* 		  @sospedra_r
+*		  hello@sospedra.me
+*/
 
-@font-face{
-	font-family: koobz;
-	src: url(fonts/koobz/koobz.ttf);
-}
+/* GLOBAL */
+@font-face{ font-family: cubic; src: url(fonts/cubic/cubic.ttf); }
+@font-face{ font-family: koobz; src: url(fonts/koobz/koobz.ttf); }
+body { margin: 0; background-color: #0d0d0d; color: #72b844; font-family: cubic; }
 
-body {
-    margin: 0;
-    background-color: #0d0d0d;
-    color: #72b844;
-    font-family: cubic;
-}
-
-section.banner{
-	text-align: center;
-	margin-top: -20px;
-	margin-bottom: 20px;
-}
-
-section.banner h3{
-	font-family: koobz;
-	font-size: 42px;
-	margin-bottom: 0;
-}
-section.banner span{	
-	font-family: sans-serif;
-	font-size: 12px;
-}
-
+/* TEXTS*/
+section.banner{ text-align: center; margin-top: -20px; margin-bottom: 20px; }
+section.banner h3{ font-family: koobz; font-size: 42px; margin-bottom: 0; }
+section.banner span{ font-family: sans-serif; font-size: 12px; }
 section.menu{
 	background-color: #1a1a1a;
 	width: 600px;
 	margin: auto;	
 	height: 45px;
+	font-size: 22px;
 }
 
-div.ranking{	
+/* HUD */
+div.ranking{ background-image: url(../img/menuleft.png); background-position: left bottom; }
+div.credits{ background-image: url(../img/menuright.png); background-position: right bottom; text-align: right; }
+.button{
 	padding-left: 10px; 
 	padding-top: 5px;
-	background-image: url(../img/menuleft.png);
 	background-repeat: no-repeat;
-	background-position: left bottom;
 	float: left;
-	font-size: 22px;
+	cursor: pointer;
 	height: 35px;
 	width: 225px;
 	cursor: pointer;
 }
-
 div.scorePlace{
 	padding-top: 10px;
 	position: relative;	
 	float: left;	
-	height:35px;
+	height: 35px;
 	width: 130px;
-	text-align: center;	
+	text-align: center;
 }
-
 span#score{
 	position: absolute;
 	bottom: 0;
-	height: 30px;
-	font-size: 22px;
+	height: 30px;	
 }
 
-div.credits{	
-	padding-right: 10px; 
-	padding-top: 5px;
-	background-image: url(../img/menuright.png);
-	background-repeat: no-repeat;
-	background-position: right bottom;
-	float: left;
-	font-size: 22px;
-	text-align: right;
-	height: 35px;
-	width: 225px;
-	cursor: pointer;
-}
-
-#gameContainer {
-	width: 600px;
-	margin: auto;
-}
+/* GAME CONTAINER */
+section#gameContainer { z-index: 1; }
+section#flash { z-index: 999; background-color: #d9d9d9; height: 600px; }
+.container{	width: 600px; position: absolute; left: 50%; margin-left: -300px; }

@@ -4,6 +4,8 @@ Main.PlayRoom = function (game) {
 
 Main.PlayRoom.prototype = {
     create: function() {        
+        this.flash = document.getElementById('gameContainer');
+        
         // The dimensions
         this.game.world.setBounds(-300, -300, 600, 600);
 
@@ -15,7 +17,7 @@ Main.PlayRoom.prototype = {
         this.scorePlaceholder = document.getElementById('score');
         if(!this.music){
             this.music = this.game.add.audio('kabanjak', 1, true);
-            this.music.play('', 0, 1, true);
+            //this.music.play('', 0, 1, true);
         }
 
         // Load the dos
@@ -103,7 +105,7 @@ Main.PlayRoom.prototype = {
         }
     },
 
-    restartGame: function(){        
+    restartGame: function(){
         this.game.time.events.remove(this.timer);
         this.game.state.start('playRoom');        
     },

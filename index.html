@@ -22,11 +22,12 @@
         <span>a game by Rub&eacute;n Sospedra, Edravis 2014</span>
     </section>
     <section class="menu">
-        <div class="ranking">Ranking</div>
+        <div class="ranking button">Ranking</div>
         <div class="scorePlace"><span id="score">0</span></div>
-        <div class="credits">Credits</div>
+        <div class="credits button">Credits</div>
     </section>
-    <section id="gameContainer"></section>
+    <section class="container" id="flash"></section>
+    <section class="container" id="gameContainer"></section>
     <script type="text/javascript">
         (function boot() {
             var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'gameContainer');
