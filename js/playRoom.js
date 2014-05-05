@@ -3,9 +3,7 @@ Main.PlayRoom = function (game) {
 };
 
 Main.PlayRoom.prototype = {
-    create: function() {        
-        this.flash = document.getElementById('gameContainer');
-        
+    create: function() {
         // The dimensions
         this.game.world.setBounds(-300, -300, 600, 600);
 
@@ -14,6 +12,7 @@ Main.PlayRoom.prototype = {
         this.eventFlag = 0;
         this.scoreIncrement = 8;
         this.e;
+        this.flash = document.getElementById('flashContainer');        
         this.scorePlaceholder = document.getElementById('score');
         if(!this.music){
             this.music = this.game.add.audio('kabanjak', 1, true);
@@ -106,6 +105,11 @@ Main.PlayRoom.prototype = {
     },
 
     restartGame: function(){
+        this.flash.className = 'container flash';
+        var me = this;
+        setInterval(function(){
+            me.flash.className = 'container';
+        },30);        
         this.game.time.events.remove(this.timer);
         this.game.state.start('playRoom');        
     },
