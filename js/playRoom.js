@@ -79,7 +79,7 @@ Main.PlayRoom.prototype = {
 		this.enlarger(this.wallsRight, 300, true);
 		this.enlarger(this.wallsLeft, -300, true);
 
-		// Movement
+		// Movement:
 		// Reset the movement
 		this.dos.body.velocity.setTo(0, 0);
 		this.dos.body.angularAcceleration = 0;
