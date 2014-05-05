@@ -10,11 +10,12 @@ Main.PlayRoom.prototype = {
         // The misc
         this.score = 0;
         this.eventFlag = 0;
+        this.scoreIncrement = 8;
         this.e;
         this.scorePlaceholder = document.getElementById('score');
         if(!this.music){
-            this.music = this.game.add.audio('kabanjak',1,true);
-            this.music.play('',0,1,true);
+            this.music = this.game.add.audio('kabanjak', 1, true);
+            this.music.play('', 0, 1, true);
         }
 
         // Load the dos
@@ -38,7 +39,13 @@ Main.PlayRoom.prototype = {
         this.wallsRight.createMultiple(80, 'wallRight');
 
         // Wall loop
-        this.timer = this.game.time.events.loop(1000, this.setupWalls, this);
+        this.timer = this.game.time.events.loop(1000, function(){
+            // Increments score
+            if(this.eventFlag === 250)
+                this.scoreIncrement += 1;
+            this.score += this.scoreIncrement;
+            this.setupWalls();
+        }, this);
 
         // Add control
         this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -96,8 +103,7 @@ Main.PlayRoom.prototype = {
         }
     },
 
-    restartGame: function(){
-        console.log("Your mark is " + this.score);
+    restartGame: function(){        
         this.game.time.events.remove(this.timer);
         this.game.state.start('playRoom');        
     },
@@ -144,9 +150,7 @@ Main.PlayRoom.prototype = {
             
     },
 
-    setupWalls: function(){
-        // Increments score
-        this.score += 16;
+    setupWalls: function(){        
         this.scorePlaceholder.innerHTML = this.score;
         this.add_row_of_walls(this.wallsBottom, 25, 30, 1, false);
         this.add_row_of_walls(this.wallsUpper, 25, -30, -1, false);
