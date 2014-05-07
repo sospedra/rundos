@@ -20,7 +20,7 @@ Main.PlayRoom.prototype = {
 		// The music
 		if(!this.music){
 			this.music = this.game.add.audio('kabanjak', 1, true);
-			//this.music.play('', 0, 1, true); 
+			this.music.play('', 0, 1, true); 
 		}
 
 		// Load the dos

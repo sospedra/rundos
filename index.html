@@ -2,58 +2,79 @@
 <html lang="en">
 
 <head>
-    <link rel="icon" 
-      type="image/png" 
-      href="assets/img/core.png" />
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <title>Run Dos Project</title>
+	<link rel="icon" 
+	  type="image/png" 
+	  href="assets/img/core.png" />
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<title>Run Dos Project</title>
 
-    <link rel="stylesheet" href="assets/css/style.css" type="text/css" media="screen" charset="utf-8">
+	<link rel="stylesheet" href="assets/css/style.css" type="text/css" media="screen" charset="utf-8">
+	<link rel="stylesheet" href="assets/vendor/fontello/css/fontello.css"></link>
 
-    <script src="js/vendor/phaser.min.js"></script>
-
-    <script src="js/boot.js"></script>
-    <script src="js/preloader.js"></script>    
-    <script src="js/playRoom.js"></script>
+	<script src="js/vendor/phaser.min.js"></script>
+	<script src="js/boot.js"></script>
+	<script src="js/preloader.js"></script>    
+	<script src="js/playRoom.js"></script>
 </head>
 
 <body>
 
-    <section class="banner">
-        <h3>Run Dos Run!</h3>
-        <span>a game by Rub&eacute;n Sospedra, Edravis 2014</span>
-    </section>
-    <section class="menu">
-        <div class="ranking button">Ranking</div>
-        <div class="scorePlace"><span id="score">0</span></div>
-        <div class="credits button">Credits</div>
-    </section>
-    <section class="container" id="flashContainer"></section>
-    <section class="container" id="controllersView"></section>
-    <section class="container" id="gameContainer"></section>
-    <section class="board" id="rankingBoard">
-        <h2>Ranking</h2>
-        <div id="yourTop">
-            <h4>Your Top 10</h4>
-            <div id="rankingData"></div>
-        </div>
-    </section>
-    <section class="board" id="creditsBoard">
-        <h2>Credits</h2>
-        <div class="text"></div>
-        <div class="licenses"></div>
-    </section>
+	<section class="banner">
+		<h3>Run Dos Run!</h3>
+		<span>a game by Rub&eacute;n Sospedra, Edravis 2014</span>
+	</section>
+	<section id="gameZone">
+		<section class="menu">
+			<div class="sound button">Sound</div>
+			<div class="scorePlace"><span id="score">0</span></div>
+			<div class="share button">Share</div>
+		</section>
+		<section class="container" id="flashContainer"></section>
+		<section class="container" id="controllersView"></section>
+		<section class="container" id="gameContainer"></section>
+		<section class="board" id="rankingBoard">
+			<h2>Ranking</h2>
+			<div id="yourTop">
+				<h4>Your Top 10</h4>
+				<div id="rankingData"></div>
+			</div>
+		</section>
+		<section class="board" id="creditsBoard">
+			<h2>Credits</h2>
+			<div class="text">
+				<p>The main goal of <italic>Run Dos Run!</italic> is to joy an experience. There's no win time or score, just an space to chill and relax out of the frenetic modern life style. Please, take a sit and free your mind.</p>
+			</div>
+			<div class="licenses">
+				<p>This game was created for academic purposes by <a href="http://www.sospedra.me/" alt="Sospedra-link">Rub&eacute;n Sospedra</a>.</p>
+				<p>The main framework is <a href="http://phaser.io/" alt="Phaser-link">Phaser</a> v1.6</p>
+				<p>The full rights of the music corresponds to <a href="http://kabanjak.wordpress.com/" alt="Kabanjak-link">Kabanjak</a> and the <a href="http://ancientastronauts.de/" alt="AncientAstronauts-link">Ancient Astronatus</a>. The title of the track is Gypsy Soul.</p>
+			</div>
+		</section>
+	</section>
 
-    <script type="text/javascript">
-        (function boot() {
-            var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'gameContainer');
+	<footer>
+		<div class="copy"><a href="http://www.sospedra.me/" alt="Sospedra-link">Rub&eacute;n Sospedra</a> &copy; 2014</div>
+		<div class="icons">
+			<a href="https://twitter.com/sospedra_r" alt="icon-twitter"><i class="icon-twitter
+			 "></i></a>
+			<a href="https://twitter.com/sospedra_r" alt="icon-gplus"><i class="icon-gplus"></i></a>
+			<a href="https://github.com/edravis" alt="icon-github"><i class="icon-github-circled"></i></a>
+			<a href="mailto:hello@sospedra.me?Subject=Hello%20Mr.%20Sospedra" alt="icon-email"><i class="icon-email"></i></a>
+			<a href="https://www.linkedin.com/in/rsospedra" alt="icon-linkedin"><i class="icon-linkedin"></i></a>
+		</div>
 
-            game.state.add('boot', Main.Boot, true);
-            game.state.add('preloader', Main.Preloader);            
-            game.state.add('playRoom', Main.PlayRoom);
-        })();
-    </script>
+	</footer>
+
+	<script type="text/javascript">
+		(function boot() {
+			var game = new Phaser.Game(600, 600, Phaser.CANVAS, 'gameContainer');
+
+			game.state.add('boot', Main.Boot, true);
+			game.state.add('preloader', Main.Preloader);            
+			game.state.add('playRoom', Main.PlayRoom);
+		})();
+	</script>
 </body>
 
 </html>
