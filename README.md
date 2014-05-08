@@ -1,4 +1,4 @@
-# Run Dos Run!
+![Run Dos Run!](https://c9.io/edravis/phaser/workspace/src/rundos/assets/img/banner.png)
 
 ## The videogame
 ### What is?
