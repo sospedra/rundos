@@ -13,15 +13,24 @@ Main.PlayRoom.prototype = {
 		this.eventFlag      = 0; // To know when change the events
 		this.scoreIncrement = 8; // The score pattern increment
 		// DOM Selectors
-		this.flash = document.getElementById('flashContainer');
-		this.scorePlaceholder = document.getElementById('score');
-		this.controllersView = document.getElementById("controllersView");
+		this.flash 				= document.getElementById('flashContainer');
+		this.scorePlaceholder 	= document.getElementById('score');
+		this.controllersView 	= document.getElementById('controllersView');
+		this.soundButton 		= document.getElementById('soundButton');
 
 		// The music
 		if(!this.music){
 			this.music = this.game.add.audio('kabanjak', 1, true);
 			this.music.play('', 0, 1, true); 
 		}
+
+		this.soundButton.onclick = function(){
+	        var play = this.getAttribute('data-play');
+	        if(play == "true")
+	        	this.setAttribute('data-play', "false");
+	        else
+	        	this.setAttribute('data-play', "true");	        
+	    };
 
 		// Load the dos
 		this.dos = this.game.add.sprite(0, 170, 'dos');
@@ -69,6 +78,12 @@ Main.PlayRoom.prototype = {
 		else if(this.e === "anticlockwise")
 			this.game.world.rotation -= 0.01;
 		this.eventFlag += 1;
+
+		// Sound playing
+		if(this.soundButton.getAttribute('data-play') == "false")
+			this.music.pause();
+		else
+			this.music.resume();
 
 		// Upper collision is not needed
 		this.game.physics.collide(this.dos, this.wallsBottom, this.restartGame, null, this);        
