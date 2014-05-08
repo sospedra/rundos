@@ -152,7 +152,7 @@ Main.PlayRoom.prototype = {
 
 		var loop = (ranking.length > 10) ? 10 : ranking.length;
 		for(var i=0; i < loop; i++)
-			frontend += ("<p>" + (i+1) + ". &nbsp;" + ranking[i]);
+			frontend += ("<p>" + (i+1) + ". &nbsp;" + parseInt(ranking[i]));
 		document.getElementById("rankingData").innerHTML = frontend;
 	},
 
