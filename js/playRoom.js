@@ -13,10 +13,11 @@ Main.PlayRoom.prototype = {
 		this.eventFlag      = 0; // To know when change the events
 		this.scoreIncrement = 8; // The score pattern increment
 		// DOM Selectors
-		this.flash 				= document.getElementById('flashContainer');
-		this.scorePlaceholder 	= document.getElementById('score');
-		this.controllersView 	= document.getElementById('controllersView');
-		this.soundButton 		= document.getElementById('soundButton');
+		this.flash 				= document.getElementById('js-flashContainer');
+		this.scorePlaceholder 	= document.getElementById('js-score');
+		this.controllersView 	= document.getElementById('js-controllersView');
+		this.soundButton 		= document.getElementById('js-soundButton');
+		this.shareButton 		= document.getElementById('js-shareButton');
 
 		// The music
 		if(!this.music){
@@ -24,12 +25,10 @@ Main.PlayRoom.prototype = {
 			this.music.play('', 0, 1, true); 
 		}
 
-		this.soundButton.onclick = function(){
-	        var play = this.getAttribute('data-play');
-	        if(play == "true")
-	        	this.setAttribute('data-play', "false");
-	        else
-	        	this.setAttribute('data-play', "true");	        
+		this.soundButton.onclick = function(){	        
+	        this.getAttribute('data-play') == "true"
+	        	? this.setAttribute('data-play', "false")
+	        	: this.setAttribute('data-play', "true");
 	    };
 
 		// Load the dos
@@ -80,10 +79,9 @@ Main.PlayRoom.prototype = {
 		this.eventFlag += 1;
 
 		// Sound playing
-		if(this.soundButton.getAttribute('data-play') == "false")
-			this.music.pause();
-		else
-			this.music.resume();
+		this.soundButton.getAttribute('data-play') == "false"
+			? this.music.pause()
+			: this.music.resume();
 
 		// Upper collision is not needed
 		this.game.physics.collide(this.dos, this.wallsBottom, this.restartGame, null, this);        
@@ -148,6 +146,9 @@ Main.PlayRoom.prototype = {
 		for(key in localStorage)
 			ranking.push(localStorage.getItem(key));
 		ranking.sort(function(a, b){return b-a});
+
+		// Update max score from twitter sharing
+		this.shareButton.href = "https://twitter.com/share?url=http://rundos.sospedra.me/&text=Wohoa!%20I%20scored%20"+ranking[0]+"%20points%20playing%20%23rundos%20at&via=sospedra_r";
 
 		var loop = (ranking.length > 10) ? 10 : ranking.length;
 		for(var i=0; i < loop; i++)
