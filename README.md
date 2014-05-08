@@ -1,5 +1,5 @@
 # Run Dos Run!
-======
+
 ## The videogame
 ### What is?
 Run Dos Run! is a web-based videogame. The style is inspired on the run scapes and puzzle runs games such as [SuperHexagon](http://superhexagon.com/) or [Run](http://www.kongregate.com/games/player_03/run-2?thumb=site). It's build on phaser [Vanilla JS](http://www.ecmascript.org/) and powered by [Phaser](http://phaser.io/). It's cross-platform on the way that run on the web. It'll be mobilelike soon!. This game was made for academic purposes and it's under the GNU License. 
@@ -20,4 +20,5 @@ Run Dos Run! was made by Rubén Sospedra for academic purposes. Any resemblance 
 * **[Vanilla JS](http://www.ecmascript.org/)**
 
 
+======
 Rubén Sospedra, Edravis 2014
